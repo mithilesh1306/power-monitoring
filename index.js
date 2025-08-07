@@ -44,21 +44,25 @@ if (!geminiAPIKey) {
   process.exit(1);
 }
 const genAI = new GoogleGenerativeAI(geminiAPIKey);
-const model = genAI.getGenerativeModel({ model: 'gemini-pro' }); // Using gemini-pro as a stable alternative
+const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+
+// ==========================================================
+// THIS IS THE UPDATED SECTION
+// ==========================================================
 const corsOptions = {
-  origin: 'http://127.0.0.1:5500',
+  origin: ['http://127.0.0.1:5500', 'https://power-monitoring.netlify.app'],
   optionsSuccessStatus: 200
 };
+// ==========================================================
+
 app.use(cors(corsOptions));
 app.use(express.json());
 const db = admin.database();
 
-// ==========================================================
 // Main Application Logic - UPDATED WITH DEBUG LOGS
-// ==========================================================
 const saveDataToMySQL = async () => {
     console.log("\n[DEBUG] Running saveDataToMySQL function...");
     try {
@@ -93,7 +97,21 @@ const saveDataToMySQL = async () => {
 setInterval(saveDataToMySQL, 30000);
 
 // AI Insight Endpoint
-app.post('/api/ai-insight', async (req, res) => { /* ... same as before ... */ });
+app.post('/api/ai-insight', async (req, res) => {
+    try {
+        const { prompt } = req.body;
+        if (!prompt) {
+            return res.status(400).json({ error: 'Prompt is required.' });
+        }
+        const result = await model.generateContent(prompt);
+        const response = await result.response;
+        const text = response.text();
+        res.json({ insight: text });
+    } catch (error) {
+        console.error("Error in /api/ai-insight:", error);
+        res.status(500).json({ error: "Failed to fetch AI insight." });
+    }
+});
 
 // Start server
 app.listen(PORT, () => {
