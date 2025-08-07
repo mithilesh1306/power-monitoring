@@ -34,27 +34,12 @@
             padding: 20px;
         }
 
-        .dashboard-container {
-            background-color: transparent;
-            border-radius: var(--border-radius);
-            padding: 30px;
-            max-width: 1200px;
-            margin: 20px auto;
-        }
-
         .section-title {
             color: var(--heading-color);
             margin-bottom: 20px;
             border-bottom: 1px solid var(--border-color);
             padding-bottom: 10px;
             font-weight: 600;
-        }
-
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 20px;
-            padding: 20px 0;
         }
 
         .metric-card, .control-card, .info-card, .chart-box, .ai-card {
@@ -64,6 +49,7 @@
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
+            height: 100%; /* Ensure cards in a row are the same height */
         }
 
         .metric-card:hover {
@@ -87,14 +73,6 @@
         #Power { color: #3fb950; }
         #Current { color: #ffc107; }
 
-        .chart-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            align-items: center;
-            padding: 20px 0;
-        }
-        
         .chart-box canvas { max-width: 100%; }
         .chart-box h5 { color: var(--heading-color); }
 
@@ -128,132 +106,245 @@
             margin-right: 10px;
         }
         .ai-card input[type="text"]::placeholder { color: var(--secondary-color); }
-        
-        /* The two lines that were here have been moved to the <script> block below */
-
     </style>
 </head>
 <body>
-    <div class="dashboard-container">
+    <div class="container">
         
         <h1 class="section-title text-center" style="color: var(--heading-color);">Smart Energy Management</h1>
 
         <h2 class="section-title">Real-Time Metrics-project</h2>
-        <div class="grid-container">
-            <div class="metric-card">
-                <div class="label">POWER</div>
-                <div class="value" id="Power">---</div>
+        <div class="row g-4">
+            <div class="col-lg-3 col-md-6 col-6">
+                <div class="metric-card">
+                    <div class="label">POWER</div>
+                    <div class="value" id="Power">---</div>
+                </div>
             </div>
-            <div class="metric-card">
-                <div class="label">CURRENT</div>
-                <div class="value" id="Current">---</div>
+            <div class="col-lg-3 col-md-6 col-6">
+                <div class="metric-card">
+                    <div class="label">CURRENT</div>
+                    <div class="value" id="Current">---</div>
+                </div>
             </div>
-            <div class="metric-card">
-                <div class="label">VOLTAGE</div>
-                <div class="value">210.8 V</div>
+            <div class="col-lg-3 col-md-6 col-6">
+                <div class="metric-card">
+                    <div class="label">VOLTAGE</div>
+                    <div class="value">210.8 V</div>
+                </div>
             </div>
-            <div class="metric-card">
-                <div class="label">CARBON FOOTPRINT</div>
-                <div class="value">20%</div>
-            </div>
-        </div>
-
-        <h2 class="section-title">Cost and Usage</h2>
-        <div class="chart-container">
-             <div class="metric-card">
-                <div class="label">LIVE COST TODAY</div>
-                <div class="value" id="costtoday">---</div>
-            </div>
-            <div class="metric-card">
-                <div class="label">COST THIS MONTH</div>
-                <div class="value">₹55,000</div>
-            </div>
-            <div class="chart-box" style="max-width: 250px; margin: auto;">
-                 <canvas id="costChart"></canvas>
+            <div class="col-lg-3 col-md-6 col-6">
+                <div class="metric-card">
+                    <div class="label">CARBON FOOTPRINT</div>
+                    <div class="value">20%</div>
+                </div>
             </div>
         </div>
 
-        <h2 class="section-title">Smart Control</h2>
-        <div class="grid-container">
-            <div class="control-card">
-                <span>LIGHT</span>
-                <label class="switch">
-                    <input type="checkbox" id="ledToggle">
-                    <span class="slider"></span>
-                </label>
+        <h2 class="section-title mt-5">Cost and Usage</h2>
+        <div class="row g-4 align-items-center">
+             <div class="col-md-4">
+                <div class="metric-card">
+                    <div class="label">LIVE COST TODAY</div>
+                    <div class="value" id="costtoday">---</div>
+                </div>
             </div>
-            <div class="control-card">
-                <span>FAN</span>
-                <label class="switch">
-                    <input type="checkbox" id="fanToggle">
-                    <span class="slider"></span>
-                </label>
+            <div class="col-md-4">
+                <div class="metric-card">
+                    <div class="label">COST THIS MONTH</div>
+                    <div class="value">₹55,000</div>
+                </div>
             </div>
-            <div class="control-card">
-                <span>PORT</span>
-                <label class="switch">
-                    <input type="checkbox" id="portToggle">
-                    <span class="slider"></span>
-                </label>
+            <div class="col-md-4">
+                <div class="chart-box" style="max-width: 250px; margin: auto;">
+                    <canvas id="costChart"></canvas>
+                </div>
             </div>
-             <div class="control-card">
-                <span>SMART BOARD</span>
-                <label class="switch">
-                    <input type="checkbox">
-                    <span class="slider"></span>
-                </label>
+        </div>
+
+        <h2 class="section-title mt-5">Smart Control</h2>
+        <div class="row g-4">
+            <div class="col-lg-3 col-md-6 col-6">
+                <div class="control-card">
+                    <span>LIGHT</span>
+                    <label class="switch">
+                        <input type="checkbox" id="ledToggle">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-6">
+                <div class="control-card">
+                    <span>FAN</span>
+                    <label class="switch">
+                        <input type="checkbox" id="fanToggle">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-6">
+                <div class="control-card">
+                    <span>PORT</span>
+                    <label class="switch">
+                        <input type="checkbox" id="portToggle">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-6">
+                <div class="control-card">
+                    <span>SMART BOARD</span>
+                    <label class="switch">
+                        <input type="checkbox">
+                        <span class="slider"></span>
+                    </label>
+                </div>
             </div>
         </div>
         
-        <h2 class="section-title">Analytics</h2>
-        <div class="chart-container">
-            <div class="chart-box">
-                <h5 class="text-center">E-BILL</h5>
-                <canvas id="barChart"></canvas>
+        <h2 class="section-title mt-5">Analytics</h2>
+        <div class="row g-4">
+            <div class="col-lg-6">
+                <div class="chart-box">
+                    <h5 class="text-center">E-BILL</h5>
+                    <canvas id="barChart"></canvas>
+                </div>
             </div>
-            <div class="chart-box">
-                <h5 class="text-center">POWER (watts)</h5>
-                <canvas id="lineChart"></canvas>
-            </div>
-        </div>
-
-        <h2 class="section-title">AI Integration</h2>
-        <div class="chart-container">
-            <div class="ai-card">
-                <h5>SMART AI INSIGHT</h5>
-                <p id="aiInsight">Could not fetch AI insight. Please ensure the backend server is running.</p>
-            </div>
-            <div class="ai-card">
-                <h5>CHAT WITH AI</h5>
-                <input type="text" id="userQuestion" placeholder="Ask something...">
-                <button id="askBtn" class="btn btn-primary rounded-pill">ASK</button>
-                <p id="userAIResponse" class="mt-2"></p>
+            <div class="col-lg-6">
+                <div class="chart-box">
+                    <h5 class="text-center">POWER (watts)</h5>
+                    <canvas id="lineChart"></canvas>
+                </div>
             </div>
         </div>
 
-        <h2 class="section-title">Help & Support</h2>
-        <div class="info-card text-center">
-            <p>For assistance or more information, please contact our comprehensive help guide.</p>
-            <button type="button" class="btn btn-outline-light rounded-pill">HELP</button>
+        <h2 class="section-title mt-5">AI Integration</h2>
+        <div class="row g-4">
+            <div class="col-lg-6">
+                <div class="ai-card">
+                    <h5>SMART AI INSIGHT</h5>
+                    <p id="aiInsight">Could not fetch AI insight. Please ensure the backend server is running.</p>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="ai-card">
+                    <h5>CHAT WITH AI</h5>
+                    <input type="text" id="userQuestion" placeholder="Ask something...">
+                    <button id="askBtn" class="btn btn-primary rounded-pill">ASK</button>
+                    <p id="userAIResponse" class="mt-2"></p>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-title mt-5">Help & Support</h2>
+        <div class="row">
+            <div class="col">
+                <div class="info-card text-center">
+                    <p>For assistance or more information, please contact our comprehensive help guide.</p>
+                    <button type="button" class="btn btn-outline-light rounded-pill">HELP</button>
+                </div>
+            </div>
         </div>
 
     </div>
 
     <script>
-        // --- CORRECTED: MOVED THE CHART.JS DEFAULTS HERE ---
-        // This is JavaScript, so it must be inside a <script> tag.
+        // --- DEFAULTS FOR ALL CHARTS ---
         Chart.defaults.color = 'var(--text-color)';
-        Chart.defaults.borderColor = 'var(--border-color)';
-        // ----------------------------------------------------
+        Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
 
+        // --- PIE CHART (Cost Chart) ---
         const ctx = document.getElementById('costChart').getContext('2d');
-        new Chart(ctx, { type: 'pie', data: { labels: ['Grid', 'Solar'], datasets: [{ label: 'Consumption', data: [70, 30], backgroundColor: ['#30363d', '#ffc107'], borderWidth: 0 }] }, options: { responsive: true, plugins: { legend: { labels: { color: 'white' }, position: 'bottom' } } } });
+        new Chart(ctx, { 
+            type: 'pie', 
+            data: { 
+                labels: ['Grid', 'Solar'], 
+                datasets: [{ 
+                    label: 'Consumption', 
+                    data: [70, 30], 
+                    backgroundColor: ['#ffffff', '#ffc107'], 
+                    borderWidth: 0 
+                }] 
+            }, 
+            options: { 
+                responsive: true, 
+                plugins: { 
+                    legend: { 
+                        labels: { color: 'var(--text-color)' }, 
+                        position: 'bottom' 
+                    } 
+                } 
+            } 
+        });
 
+        // --- BAR CHART (E-Bill) ---
         const barCtx = document.getElementById('barChart').getContext('2d');
-        const barChart = new Chart(barCtx, { type: 'bar', data: { labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'], datasets: [{ label: 'E-BILL (₹)', data: [1200, 1500, 1100, 1800, 2000, 1750, 1300], backgroundColor: 'rgba(88, 166, 255, 0.8)', borderColor: 'var(--primary-color)', borderWidth: 1 }] }, options: { scales: { y: { beginAtZero: true } }, plugins: { legend: { position: 'top' } } } });
+        const barChart = new Chart(barCtx, { 
+            type: 'bar', 
+            data: { 
+                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'], 
+                datasets: [{ 
+                    label: 'E-BILL (₹)', 
+                    data: [1200, 1500, 1100, 1800, 2000, 1750, 1300], 
+                    backgroundColor: 'rgba(88, 166, 255, 0.8)', 
+                    borderColor: 'var(--primary-color)', 
+                    borderWidth: 1 
+                }] 
+            }, 
+            options: { 
+                scales: { 
+                    y: { 
+                        beginAtZero: true,
+                        ticks: { color: 'var(--text-color)' }, // Set Y-axis label color
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' } // Set Y-axis grid line color
+                    },
+                    x: {
+                        ticks: { color: 'var(--text-color)' }, // Set X-axis label color
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' } // Set X-axis grid line color
+                    }
+                }, 
+                plugins: { 
+                    legend: { position: 'top' } 
+                } 
+            } 
+        });
 
+        // --- LINE CHART (Power) ---
         const lineCtx = document.getElementById('lineChart').getContext('2d');
-        const lineChart = new Chart(lineCtx, { type: 'line', data: { labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'], datasets: [{ label: 'Energy Usage (kWh)', data: [5500, 5800, 5600, 6100, 5900, 6300], backgroundColor: 'rgba(88, 166, 255, 0.2)', borderColor: '#58a6ff', borderWidth: 2, tension: 0.3, fill: true, pointBackgroundColor: '#fff', pointBorderColor: '#58a6ff' }] }, options: { responsive: true, scales: { y: { beginAtZero: false } }, plugins: { legend: { position: 'top' } } } });
+        const lineChart = new Chart(lineCtx, { 
+            type: 'line', 
+            data: { 
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'], 
+                datasets: [{ 
+                    label: 'Energy Usage (kWh)', 
+                    data: [5500, 5800, 5600, 6100, 5900, 6300], 
+                    backgroundColor: 'rgba(88, 166, 255, 0.2)', 
+                    borderColor: '#58a6ff', 
+                    borderWidth: 2, 
+                    tension: 0.3, 
+                    fill: true, 
+                    pointBackgroundColor: '#fff', 
+                    pointBorderColor: '#58a6ff' 
+                }] 
+            }, 
+            options: { 
+                responsive: true, 
+                scales: { 
+                    y: { 
+                        beginAtZero: false,
+                        ticks: { color: 'var(--text-color)' }, // Set Y-axis label color
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' } // Set Y-axis grid line color
+                    },
+                    x: {
+                        ticks: { color: 'var(--text-color)' }, // Set X-axis label color
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' } // Set X-axis grid line color
+                    }
+                }, 
+                plugins: { 
+                    legend: { position: 'top' } 
+                } 
+            } 
+        });
     </script>
     
     <script type="module">
