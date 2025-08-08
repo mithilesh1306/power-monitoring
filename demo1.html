@@ -6,81 +6,19 @@
     <title>Smart Energy Dashboard</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        body {
-            background-color: #f8f9fa;
-            font-family: 'Poppins', sans-serif;
-            color: #333;
-        }
-        .container-main {
-            background-color: white;
-            border-radius: 20px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-            padding: 20px;
-            max-width: 1400px;
-            margin: 20px auto;
-        }
-        .header {
-            border-radius: 15px;
-            background-color: rgb(59, 43, 124);
-            color: white;
-            padding: 10px;
-            margin-bottom: 20px;
-        }
-        h2, h3 {
-            font-weight: 600;
-        }
-        .section {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-            padding: 20px;
-            margin-bottom: 20px;
-            background-color: #fff;
-            border-radius: 15px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        }
-        .metric-box, .control-box, .chart-box, .ai-box, .info-box {
-            background-color: #f8f9fa;
-            border: 1px solid #e9ecef;
-            border-radius: 15px;
-            padding: 20px;
-            text-align: center;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-        .metric-box:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-        }
-        .metric-box {
-            flex-basis: 180px;
-            flex-grow: 1;
-        }
-        .metric-box .label {
-            font-size: 1rem;
-            color: #6c757d;
-        }
-        .metric-box .value {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #212529;
-        }
-        .control-box {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-basis: 220px;
-            padding: 15px 25px;
-        }
-        .chart-box {
-            flex-basis: 48%;
-            min-width: 300px;
-            height: 400px;
-        }
-        .ai-box {
-            flex-basis: 48%;
-            text-align: left;
-        }
+        body { background-color: #f8f9fa; font-family: 'Poppins', sans-serif; color: #333; }
+        .container-main { background-color: white; border-radius: 20px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); padding: 20px; max-width: 1400px; margin: 20px auto; }
+        .header { border-radius: 15px; background-color: rgb(59, 43, 124); color: white; padding: 10px; margin-bottom: 20px; }
+        h2, h3 { font-weight: 600; }
+        .section { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; padding: 20px; margin-bottom: 20px; background-color: #fff; border-radius: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .metric-box, .control-box, .chart-box, .ai-box, .info-box { background-color: #f8f9fa; border: 1px solid #e9ecef; border-radius: 15px; padding: 20px; text-align: center; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .metric-box:hover { transform: translateY(-5px); box-shadow: 0 8px 16px rgba(0,0,0,0.1); }
+        .metric-box { flex-basis: 180px; flex-grow: 1; }
+        .metric-box .label { font-size: 1rem; color: #6c757d; }
+        .metric-box .value { font-size: 2rem; font-weight: 700; color: #212529; }
+        .control-box { display: flex; justify-content: space-between; align-items: center; flex-basis: 220px; padding: 15px 25px; }
+        .chart-box { flex-basis: 48%; min-width: 300px; height: 400px; }
+        .ai-box { flex-basis: 48%; text-align: left; }
         .switch { position: relative; display: inline-block; width: 50px; height: 26px; }
         .switch input { opacity: 0; width: 0; height: 0; }
         .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 34px; }
@@ -94,9 +32,7 @@
 </head>
 <body>
     <div class="container-main">
-        <header class="header">
-            <h1 style="text-align: center; font-size: 1.5rem;">Smart Energy Management</h1>
-        </header>
+        <header class="header"><h1 style="text-align: center; font-size: 1.5rem;">Smart Energy Management</h1></header>
 
         <h2 style="color:rgb(133, 99, 164);">Real-Time Metrics</h2>
         <div class="section">
@@ -128,9 +64,7 @@
 
         <h2>Notifications & Alerts</h2>
         <div class="section">
-            <div class="info-box" style="background-color: #fffbe6; border-color: #ffe58f; width: 100%;">
-                <h3 id="motionAlert">No motion detected recently.</h3>
-            </div>
+            <div class="info-box" style="background-color: #fffbe6; border-color: #ffe58f; width: 100%;"><h3 id="motionAlert">No motion detected recently.</h3></div>
         </div>
 
         <h2>AI Integration</h2>
@@ -154,7 +88,7 @@
 
         // --- CONFIGURATION ---
         const firebaseConfig = {
-            apiKey: "YOUR_API_KEY", // Replace with your key
+            apiKey: "AIzaSyDK2t0oMloB7t3zFt84voANXxgvnS8YadM",
             authDomain: "test-001-c3444.firebaseapp.com",
             databaseURL: "https://test-001-c3444-default-rtdb.asia-southeast1.firebasedatabase.app",
             projectId: "test-001-c3444",
@@ -169,25 +103,12 @@
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
 
-        // --- CHART SETUP (Initialized here, data loaded later) ---
+        // --- CHART SETUP ---
         const createChart = (ctx, type, data, options) => new Chart(ctx, { type, data, options });
-        const chartOptions = {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: { y: { beginAtZero: true } }
-        };
-
-        const costSourceChart = createChart(document.getElementById('costSourceChart').getContext('2d'), 'pie', {
-            labels: ['Grid', 'Solar'], datasets: [{ data: [70, 30], backgroundColor: ['#5865f2', '#f0b90b'] }]
-        }, { responsive: true, maintainAspectRatio: false });
-
-        const billBarChart = createChart(document.getElementById('billBarChart').getContext('2d'), 'bar', {
-            labels: [], datasets: [{ label: 'E-BILL (₹)', data: [], backgroundColor: '#5865f2' }]
-        }, chartOptions);
-
-        const powerLineChart = createChart(document.getElementById('powerLineChart').getContext('2d'), 'line', {
-            labels: [], datasets: [{ label: 'Power (W)', data: [], borderColor: '#f25858', tension: 0.3 }]
-        }, chartOptions);
+        const chartOptions = { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true } } };
+        const costSourceChart = createChart(document.getElementById('costSourceChart').getContext('2d'), 'pie', { labels: ['Grid', 'Solar'], datasets: [{ data: [70, 30], backgroundColor: ['#5865f2', '#f0b90b'] }] }, { responsive: true, maintainAspectRatio: false });
+        const billBarChart = createChart(document.getElementById('billBarChart').getContext('2d'), 'bar', { labels: [], datasets: [{ label: 'E-BILL (₹)', data: [], backgroundColor: '#5865f2' }] }, chartOptions);
+        const powerLineChart = createChart(document.getElementById('powerLineChart').getContext('2d'), 'line', { labels: [], datasets: [{ label: 'Power (W)', data: [], borderColor: '#f25858', tension: 0.3 }] }, chartOptions);
 
         // --- REAL-TIME FIREBASE LISTENERS ---
         onValue(ref(db, "POWER"), snapshot => {
@@ -197,27 +118,19 @@
             const voltage = current > 0 ? (power / current) : 0;
             document.getElementById("Voltage").innerText = `${voltage.toFixed(2)} V`;
         });
-
         onValue(ref(db, "CURRENT_DATA"), snapshot => {
             const current = snapshot.val() || 0;
             document.getElementById("Current").innerText = `${current.toFixed(2)} A`;
             fetchInsight(current);
         });
-        
-        // Motion Sensor Listener
         let lastMotionTime = null;
         onValue(ref(db, "IR_DATA"), (snapshot) => {
-            if (snapshot.val() === "HIGH") {
-                lastMotionTime = new Date();
-                document.getElementById('motionAlert').innerText = 'Motion Detected!';
-            }
+            if (snapshot.val() === "HIGH") { lastMotionTime = new Date(); document.getElementById('motionAlert').innerText = 'Motion Detected!'; }
         });
         setInterval(() => {
             if (lastMotionTime) {
                 const diff_s = Math.floor((new Date() - lastMotionTime) / 1000);
-                if (diff_s > 5) { // Show "last seen" after 5 seconds
-                    document.getElementById('motionAlert').innerText = `Motion last detected ${diff_s} seconds ago.`;
-                }
+                if (diff_s > 5) { document.getElementById('motionAlert').innerText = `Motion last detected ${diff_s} seconds ago.`; }
             }
         }, 1000);
 
@@ -233,77 +146,56 @@
         setupToggle("portToggle", "PORT_STATUS");
 
         // --- DATA FETCHING FROM BACKEND API ---
-
         async function fetchDashboardData() {
             try {
-                // Costs
                 const costsRes = await fetch(`${API_SERVER_URL}/api/costs`);
                 const costsData = await costsRes.json();
                 document.getElementById("cost-today").innerText = `₹${costsData.cost_today}`;
                 document.getElementById("cost-month").innerText = `₹${costsData.cost_month}`;
 
-                // Total Energy
                 const energyRes = await fetch(`${API_SERVER_URL}/api/total-energy`);
                 const energyData = await energyRes.json();
                 document.getElementById('totalEnergySum').innerText = `${(energyData.totalEnergy / 1000).toFixed(2)} kWh`;
 
-                // Weekly Bill Chart
                 const billChartRes = await fetch(`${API_SERVER_URL}/api/charts/weekly-bill`);
                 const billChartData = await billChartRes.json();
                 billBarChart.data.labels = billChartData.labels;
                 billBarChart.data.datasets[0].data = billChartData.data;
                 billBarChart.update();
 
-                // Power History Chart
                 const powerChartRes = await fetch(`${API_SERVER_URL}/api/charts/power-history`);
                 const powerChartData = await powerChartRes.json();
                 powerLineChart.data.labels = powerChartData.labels;
                 powerLineChart.data.datasets[0].data = powerChartData.data;
                 powerLineChart.update();
-
-            } catch (error) {
-                console.error("Error fetching dashboard data:", error);
-            }
+            } catch (error) { console.error("Error fetching dashboard data:", error); }
         }
 
         // --- AI INTEGRATION ---
         async function fetchInsight(current) {
             try {
                 const prompt = `Current campus energy usage is ${current.toFixed(2)} amperes. Provide a brief, actionable insight for smart energy management.`;
-                const response = await fetch(`${API_SERVER_URL}/api/ai-insight`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ prompt }),
-                });
+                const response = await fetch(`${API_SERVER_URL}/api/ai-insight`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ prompt }), });
                 const data = await response.json();
                 document.getElementById("aiInsight").innerText = data.insight;
-            } catch (error) {
-                console.error("Error fetching AI insight:", error);
-            }
+            } catch (error) { console.error("Error fetching AI insight:", error); }
         }
-
         document.getElementById("askBtn").addEventListener("click", async () => {
             const userQuestion = document.getElementById("userQuestion").value;
             const responseEl = document.getElementById("userAIResponse");
             if (!userQuestion) return;
             responseEl.innerText = "Thinking...";
             try {
-                const response = await fetch(`${API_SERVER_URL}/api/ai-insight`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ prompt: userQuestion }),
-                });
+                const response = await fetch(`${API_SERVER_URL}/api/ai-insight`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ prompt: userQuestion }), });
                 const data = await response.json();
                 responseEl.innerText = data.insight;
-            } catch (error) {
-                responseEl.innerText = "Failed to get an answer.";
-            }
+            } catch (error) { responseEl.innerText = "Failed to get an answer."; }
         });
         
         // --- INITIAL LOAD AND REFRESH ---
         document.addEventListener('DOMContentLoaded', () => {
-            fetchDashboardData(); // Fetch all data on load
-            setInterval(fetchDashboardData, REFRESH_INTERVAL); // Refresh every 30 seconds
+            fetchDashboardData();
+            setInterval(fetchDashboardData, REFRESH_INTERVAL);
         });
     </script>
 </body>
