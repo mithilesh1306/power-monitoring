@@ -16,10 +16,10 @@ const serviceAccount = require("./test-001-c3444-firebase-adminsdk-fbsvc-14e01ba
 const firebaseDatabaseURL = "https://test-001-c3444-default-rtdb.asia-southeast1.firebasedatabase.app";
 // Your MySQL database connection details
 const mysqlConfig = {
-    host: 'localhost',
+    host: 'localhost', // Note: This will be a problem, see below
     user: 'root',
-    password: 'Mithi@1817',
-    database: 'energy_metrics' // Ensure this database exists
+    password: process.env.DB_PASSWORD, // This is the new, correct way
+    database: 'energy_metrics'
 };
 const geminiAPIKey = process.env.GEMINI_API_KEY;
 
