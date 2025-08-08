@@ -1,4 +1,4 @@
-registration.html:<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -10,10 +10,6 @@ registration.html:<!DOCTYPE html>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     
     <style>
-        .powerhouse {
-            color: white;
-            text-align: center;
-        }
         :root {
             --bg-color: #0d1117;
             --card-bg-color: #161b22;
@@ -34,6 +30,7 @@ registration.html:<!DOCTYPE html>
             align-items: center;
             height: 100vh;
             margin: 0;
+            padding: 20px;
         }
         .form-container {
             background-color: var(--card-bg-color);
@@ -47,8 +44,13 @@ registration.html:<!DOCTYPE html>
         }
         .form-container h1 {
             color: var(--heading-color);
-            margin-bottom: 30px;
+            margin-bottom: 10px;
             font-weight: 600;
+        }
+        .form-container .powerhouse {
+            color: var(--text-color);
+            font-size: 1.2rem;
+            margin-bottom: 30px;
         }
         .input-group { margin-bottom: 20px; text-align: left; }
         .input-group label { display: block; margin-bottom: 8px; font-weight: 500; font-size: 0.9rem; }
@@ -73,6 +75,7 @@ registration.html:<!DOCTYPE html>
             font-weight: 600;
             cursor: pointer;
             transition: background-color 0.2s ease;
+            margin-top: 10px;
         }
         .submit-button:hover { background-color: #4a91e3; }
         #register-form { display: none; }
@@ -87,9 +90,8 @@ registration.html:<!DOCTYPE html>
 <body>
 
     <div class="form-container">
-        <div class="powerhouse">
-            <h1>Power House</h1>
-        </div>
+        <h1 class="powerhouse">Smart Energy Management</h1>
+
         <form id="login-form">
             <h1>Login</h1>
             <div class="input-group">
@@ -130,11 +132,13 @@ registration.html:<!DOCTYPE html>
     </div>
 
     <script>
+        const API_URL = 'http://localhost:3001';
         const loginForm = document.getElementById('login-form');
         const registerForm = document.getElementById('register-form');
         const showRegisterLink = document.getElementById('show-register');
         const showLoginLink = document.getElementById('show-login');
-        
+
+        // --- Logic to toggle between Login and Register Forms ---
         showRegisterLink.addEventListener('click', (e) => {
             e.preventDefault();
             loginForm.style.display = 'none';
@@ -147,29 +151,58 @@ registration.html:<!DOCTYPE html>
             loginForm.style.display = 'block';
         });
 
-        // Handle Login Form Submission
-        loginForm.addEventListener('submit', (e) => {
+        // --- Handle Login Form Submission ---
+        loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            // In a real app, this would also call the server to verify login
-            window.location.href = 'welcomesem.html';
+            const loginMessage = document.getElementById('login-message');
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            
+            loginMessage.textContent = 'Logging in...';
+            loginMessage.className = 'message';
+
+            try {
+                // Call the /login endpoint on the backend
+                const response = await fetch(`${API_URL}/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    loginMessage.textContent = data.message;
+                    loginMessage.className = 'message success';
+                    // On successful login, redirect to the main dashboard
+                    window.location.href = 'index.html'; 
+                } else {
+                    loginMessage.textContent = data.message;
+                    loginMessage.className = 'message error';
+                }
+            } catch (error) {
+                console.error('Login Error:', error);
+                loginMessage.textContent = 'Could not connect to the server.';
+                loginMessage.className = 'message error';
+            }
         });
 
-        // Handle Registration Form Submission with SERVER aPI CALL
+        // --- Handle Registration Form Submission ---
         registerForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const registerMessage = document.getElementById('register-message');
-
             const name = document.getElementById('register-name').value;
             const email = document.getElementById('register-email').value;
             const password = document.getElementById('register-password').value;
+            
+            registerMessage.textContent = 'Registering...';
+            registerMessage.className = 'message';
 
             try {
-                // CORRECTED: Use the correct port for the backend server
-                const response = await fetch('http://localhost:3001/register', {
+                 // Call the /register endpoint on the backend
+                const response = await fetch(`${API_URL}/register`, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ name, email, password })
                 });
 
@@ -179,13 +212,19 @@ registration.html:<!DOCTYPE html>
                     registerMessage.textContent = data.message;
                     registerMessage.className = 'message success';
                     registerForm.reset();
+                    // Automatically switch to the login form after successful registration
+                    setTimeout(() => {
+                        registerForm.style.display = 'none';
+                        loginForm.style.display = 'block';
+                        document.getElementById('login-message').textContent = 'Registration successful! Please log in.';
+                        document.getElementById('login-message').className = 'message success';
+                    }, 2000);
                 } else {
                     registerMessage.textContent = data.message;
                     registerMessage.className = 'message error';
                 }
-
             } catch (error) {
-                console.error('Error:', error);
+                console.error('Registration Error:', error);
                 registerMessage.textContent = 'Could not connect to the server.';
                 registerMessage.className = 'message error';
             }

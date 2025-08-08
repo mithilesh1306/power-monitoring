@@ -1,805 +1,310 @@
-demo1.html:
-<html>
-    <head>
-        <title> design1 </title>
-        <style>
-            .zero
-            {
-           background-color: white;
-            border-radius: 20px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            padding: 30px;
-            max-width: 1200px;
-            margin: 50px auto;
-            font-family: cursive;
-            }
-            
-           
-           .header
-           {
-            width: 90%; margin: 0 auto;display: block;border-radius: 20px;background-color: rgb(59,43,124);color: white;
-            margin: right 20px;
-           }
-            .first
-            {
-                display: flex;
-                padding: 40px;
-                justify-content:center;
-                gap: 20px;
-                box-shadow: 2px 2px 2px 2px rgb(215, 200, 200);
-               
-            }
-            .box
-            {
-              width: 150px;
-              padding: 20px;
-              border-radius: 20px;
-              text-align: center;
-              transition: transform 0.15s ease;
-              border-radius: 20px;
-            background-color: rgb(43, 87, 169);
-            color: whitesmoke;
-              
-            }
-            .second
-            {
-                display: flex;
-                padding: 40px;
-                gap: 80px;
-                justify-content:center;
-                gap: 20px;
-                box-shadow: 2px 2px 2px 2px rgb(125, 123, 123);   
-                background-color: rgb(210, 206, 206);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
-                
-            }
-            .box2
-            {
-                width: 150px;
-                height: 100px;
-              padding: 40px;
-              border-radius: 20px;
-              text-align: center;
-              background-color: rgb(117, 119, 121);
-              color: rgb(255, 255, 255);
-            }
-
-            .box:active {
-            transform: translateY(-15px);
-            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.3);
-            }
-
-            .three
-            {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 40px;
-            padding: 40px;
-            box-shadow: 2px 2px 2px 2px rgb(215, 200, 200);
-            background-color: rgb(255, 255, 255);
-            flex-wrap: wrap;
-
-            }
-            .device {
-            display: block;
-            align-items: center;
-            background-color: #f2f4f7;
-            padding: 15px 20px;
-            border-radius: 10px;
-            margin-bottom: 10px;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Energy Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Poppins', sans-serif;
+            color: #333;
         }
-
-        /* Toggle switch style */
-        .switch {
-            position: relative;
-            display: inline-block;
-            width: 50px;
-            height: 26px;
-        }
-
-        .switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-color: #ccc;
-            transition: 0.4s;
-            border-radius: 34px;
-        }
-
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 20px;
-            width: 20px;
-            left: 4px;
-            bottom: 3px;
+        .container-main {
             background-color: white;
-            transition: 0.4s;
-            border-radius: 50%;
-        }
-
-        input:checked + .slider {
-            background-color: #4caf50;
-        }
-
-        input:checked + .slider:before {
-            transform: translateX(24px);
-        }
-
-           .four
-           {
-            height: auto;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-           gap: 70px;
-         padding: 60px;
-        flex-wrap: wrap;
-        background-color: #fff;
-         box-shadow: 2px 2px 2px 2px rgb(215, 200, 200);
-           } 
-           .box4
-           {
-                
-            width: 400px;  
-            height: auto;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
             padding: 20px;
-            border-radius: 20px;
-            box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+            max-width: 1400px;
+            margin: 20px auto;
+        }
+        .header {
+            border-radius: 15px;
+            background-color: rgb(59, 43, 124);
+            color: white;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+        h2, h3 {
+            font-weight: 600;
+        }
+        .section {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .metric-box, .control-box, .chart-box, .ai-box, .info-box {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .metric-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+        .metric-box {
+            flex-basis: 180px;
+            flex-grow: 1;
+        }
+        .metric-box .label {
+            font-size: 1rem;
+            color: #6c757d;
+        }
+        .metric-box .value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #212529;
+        }
+        .control-box {
+            display: flex;
+            justify-content: space-between;
             align-items: center;
-            background-color: white;
-            box-shadow: 2px 2px 2px 2px rgb(215, 200, 200);
-            border-radius: 20px;
-           }
-
-                 
-                 
-           
-            .chart-heading {
-    margin: 0 0 10px 0;
-    font-size: 18px;
-    font-weight: bold;
-    color: #333;
-    text-align: left;
-}
-
-.box4 canvas {
-    display: block;
-    margin: 0 auto;
-}             
-             .five
-             {
-                
-                box-shadow: 2px 2px 2px 2px rgb(122, 111, 111);
-                padding: 20px;
-                color: #282727;
-                background-color: rgb(255, 217, 217);
-             }
-
-             .btn1
-             {
-                width: 20%;
-                border-radius: 50px;
-                padding: 0px;
-                height: 30px;
-                background-color: #d71414;
-                color: white;
-                font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-             }
-             
-             .six
-             {
-                box-shadow: 2px 2px 2px 2px rgb(122, 111, 111);
-                padding: 30px;
-                gap: 80px;
-                justify-content: center;
-             }
-             .box6
-             {
-                border-radius: 20px;
-                padding: 5px;
-                
-             }
-
-             .seven
-             {
-                display:flex;
-                gap: 30px;
-                box-shadow: 2px 2px 2px 2px rgb(215, 200, 200);
-                align-items: center;
-                padding: 40px;
-             }
-
-             .box7
-             {
-               width: 500px;
-                border-radius: 45px;
-                padding: 20px;
-                box-shadow: 2px 2px 2px 2px rgb(215, 200, 200);
-             }
-
-             .btn2
-             {
-                border-radius: 30px;
-             }
-
-             .eight
-             {
-                box-shadow: 2px 2px 2px 2px rgb(215,200,200);
-                border-radius: 5px;
-                padding: 40px;
-             }
-             
-            .nine
-            {
-                display: flex;
-                gap: 50px;
-                box-shadow: 2px 2px 2px 2px rgb(215, 200, 200);
-                align-items: center;
-                padding: 40px;
-                justify-content: center;
-            }
-            .box9
-            {  
-                width:300px;
-                padding: 20px;
-                box-shadow: 2px 2px 2px 2px rgb(215, 200, 200);
-                border-radius: 45px;
-
-            }
-
-            </style>
-            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-            </head>
-            <body>
-                <div class="zero"> 
-                <div>
-                    <fieldset class="header">
-                    <h2 style="text-align: center;"> SRI KRISHNA COLLEGE OF ENGENERRING AND TECHNOLOGY </h2>
-                    </fieldset>
-                    </div>
-                    <br>
-                    <h2 style="text-align: center;"> SMART ENERGY MANAGEMENT </h2>
-                    <br>
-                    <h2 style="color:rgb(133, 99, 164) ;"> REAL-TIME METRICS </h2>
-                    <div class="first"> 
-                        
-                        <fieldset class="box"> <div>  POWER </div> <h2 id="Power"> _ _ _ </h2>
-                        </fieldset>
-
-                        <fieldset class="box"> <div>  CURRENT </div> <h2 id="Current">  _ _ _ </h2>
-                        </fieldset>
-
-                        <fieldset class="box"> <div> VOLTAGE </div> <h2> 210.8 V </h2> 
-                        </fieldset>
-
-                        <fieldset class="box">  CARBON FOOT-PRINT  <h2> 20% </h2>
-                        </fieldset>
-
-                        <fieldset class="box">  TOTAL-POWER  <h2 id="totalEnergySum"> --- </h2>
-                        </fieldset>
-                     
-                        </div>
-
-                        <br> 
-
-                        <h2 style="color: rgb(14, 81, 105);"> COST AND USAGE </h2>
-
-                        <div class="second">  
-                            <fieldset class="box2"> <div>COST TODAY </div> <h2 id="costtoday">---</h2> </fieldset>
-
-                            <fieldset class="box2"> <div>COST TODAY </div> <h2 id="weeklyCostDisplay">---</h2> </fieldset>
-
-                            <fieldset class="box2"> <div> COST THIS MONTH </div> <h2 id="monthlyCostDisplay"> --- </fieldset>
-
-                                <canvas id="costChart" width="200" height="200"></canvas>
-
-                            </div>
-
-                            <br>
-                            <h2 style="color: rgb(142, 107, 63);"> SMART CONTROL</h2>
-
-                            <div class="three">
-                                
-                        <div class="device">
-                        <span>LIGHT  </span>
-                        <label class="switch">
-                        <input type="checkbox"id="ledToggle">
-                        <span class="slider"></span>
-                        </label>
-                        </div>
-
-                        <div class="device">
-                        <span>FAN  </span>
-                        <label class="switch">
-                        <input type="checkbox"id="fanToggle">
-                        <span class="slider"></span>
-                        </label>
-                        </div>
-
-                        <div class="device">
-                        <span>port </span>
-                        <label class="switch">
-                        <input type="checkbox"id="portToggle">
-                        <span class="slider"></span>
-                        </label>
-                        </div>
-
-                        <div class="device">
-                        <span>SMART BOARD </span>
-                        <label class="switch">
-                        <input type="checkbox">
-                        <span class="slider"></span>
-                        </label>
-                        </div>
-
-                        </div>
-                        <br>
-                        <h2 style="color: #226924;"> ANALYTICS</h2>
-                        <div class="four">
-                           
-                            <fieldset class="box4">
-                            <h3 style="color: rgb(120, 13, 13);">E-BILL</h3>
-                        <canvas id="barChart" width="420" height="350"></canvas>
-                        </fieldset>
-
-                        <fieldset class="box4">
-                        <h3 style="color: rgb(138, 34, 116);">POWER(watts)</h3>
-                        <canvas id="lineChart" width="420" height="350"></canvas>
-                        </fieldset>
-
-
-                             </div>  <br> <h2 style="color: rgb(165, 71, 71);"> ENERGY SAVER </h2>
-                             <div class="five">
-                                <h3> Automatically turn off all power in the college campus to save energy </h3>
-                                <br>
-                                <button type="button" class="btn1"> TURN OFF THE SUPPLY </button>
-                                </div>
-                                <br>
-
-                                <h2> NOTIFICATIONS & ALERTS </h2>
-
-                                <div class="six"> <fieldset class="box6"> <h2 id="motionAlert"> ---- </h2> 
-                                    </fieldset>
-                                    <br>
-                                    <fieldset class="box6">   POWER OFF: Yesterday the power was turned off by 6pm </fieldset>
-                                    <br>
-                                    <fieldset class="box6">   POWER OFF: Yesterday the power was turned off by 6pm </fieldset>
-                                </div>
-
-                                <br>
-
-                                <h2> AI-INTEGRATION</h2>
-
-<div class="seven">
-    <fieldset class="box7">
-        <h3>SMART AI INSIGHT</h3>
-        <p id="aiInsight">FETCHING ON PROCESS... ANALYZING THE VALUES...</p>
-    </fieldset>
-
-    <fieldset class="box7">
-        <h3>CHAT WITH AI</h3>
-        <input type="text" id="userQuestion" placeholder="Ask something..." style="border-radius: 40px;width: 70%;padding: 10px;" />
-        <button id="askBtn" style="border-radius: 40px;font-family: 'Times New Roman', Times, serif;">RISE QUESTION</button>
-        <p id="userAIResponse"></p>
-    </fieldset>
-</div> 
-
-<br>
-
-<h2 style="color: rgb(165, 71, 71);"> ENERGY ANALYTICS BY DAY </h2>
-<div class="nine">
-    <fieldset class="box9"> 
-        <label for="dateInputDay">Select a Date:</label>
-        <input type="date" id="dateInputDay" style="border-radius: 5px; padding: 5px;">
-        <button id="searchDayBtn">Search</button>
-    </fieldset>
-
-    <fieldset class="box9">
-        <h3>Total Energy for <span id="selectedDaySpan">...</span></h3>
-        <p id="totalEnergySumByDay">Calculating...</p>    
-    </fieldset>
-</div>
-
-
-                            <h2> HELP & SUPPORT </h2>
-
-                            <div class="eight"> 
-                                <h3> For assistance or more information, please contact our comprehensive help guide </h3>
-                                <button type="button" style="border-radius: 50px;padding: 10px;font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;"> HELP </button>
-                            </div>
-
-
-                           
-               
-                    </div>
-
-                    <script>
-    const ctx = document.getElementById('costChart').getContext('2d');
-    new Chart(ctx, {
-        type: 'pie',
-        data: {
-            labels: ['solar', 'electricity'],
-            datasets: [{
-                label: 'Consumption',
-                data: [30,70], // you can update these
-                backgroundColor: [
-                    '#FF0000',
-                    '#808080'
-                    
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: false,
-            plugins: {
-                legend: {
-                    position: 'bottom'
-                }
-            }
+            flex-basis: 220px;
+            padding: 15px 25px;
         }
-    });
-</script>
-
-<script>
-  const barCtx = document.getElementById('barChart').getContext('2d');
-  const barChart = new Chart(barCtx, {
-      type: 'bar',
-      data: {
-          labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-          datasets: [{
-              label: 'E-BILL (rupees)',
-              data: [10000, 20000, 30000, 40000, 50000, 60000,70000],
-              backgroundColor: '#FF0000',
-              borderColor: 'rgba(54, 162, 235, 1)',
-              borderWidth: 1
-          }]
-      },
-      options: {
-          scales: {
-              y: {
-                  beginAtZero: true
-              }
-          },
-          plugins: {
-              legend: {
-                  position: 'top'
-              }
-          }
-      }
-  });
-</script>
-
-<script>
-    const lineCtx = document.getElementById('lineChart').getContext('2d');
-    const lineChart = new Chart(lineCtx, {
-        type: 'line',
-        data: {
-            labels: [], // Start with empty labels
-            datasets: [{
-                label: 'Energy Usage (mWh)',
-                data: [], // Start with empty data
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                borderColor: '#4b5563',
-                borderWidth: 2,
-                tension: 0.3,
-                fill: true,
-                pointBackgroundColor: '#fff',
-                pointBorderColor: '#4b5563'
-            }]
-        },
-        options: {
-            responsive: false,
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            },
-            plugins: {
-                legend: {
-                    position: 'top'
-                }
-            }
+        .chart-box {
+            flex-basis: 48%;
+            min-width: 300px;
+            height: 400px;
         }
-    });
-</script>
-</script>
+        .ai-box {
+            flex-basis: 48%;
+            text-align: left;
+        }
+        .switch { position: relative; display: inline-block; width: 50px; height: 26px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 34px; }
+        .slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 4px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: #4caf50; }
+        input:checked + .slider:before { transform: translateX(24px); }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container-main">
+        <header class="header">
+            <h1 style="text-align: center; font-size: 1.5rem;">Smart Energy Management</h1>
+        </header>
 
+        <h2 style="color:rgb(133, 99, 164);">Real-Time Metrics</h2>
+        <div class="section">
+            <div class="metric-box"><div class="label">POWER</div><div class="value" id="Power">---</div></div>
+            <div class="metric-box"><div class="label">CURRENT</div><div class="value" id="Current">---</div></div>
+            <div class="metric-box"><div class="label">VOLTAGE</div><div class="value" id="Voltage">---</div></div>
+            <div class="metric-box"><div class="label">TOTAL ENERGY</div><div class="value" id="totalEnergySum">---</div></div>
+        </div>
+
+        <h2 style="color: rgb(14, 81, 105);">Cost & Usage</h2>
+        <div class="section">
+            <div class="metric-box"><div class="label">COST TODAY</div><div class="value" id="cost-today">---</div></div>
+            <div class="metric-box"><div class="label">COST THIS MONTH</div><div class="value" id="cost-month">---</div></div>
+            <div style="flex-basis: 250px; height: 200px;"><canvas id="costSourceChart"></canvas></div>
+        </div>
+
+        <h2 style="color: rgb(142, 107, 63);">Smart Controls</h2>
+        <div class="section">
+            <div class="control-box"><span>LIGHT</span><label class="switch"><input type="checkbox" id="ledToggle"><span class="slider"></span></label></div>
+            <div class="control-box"><span>FAN</span><label class="switch"><input type="checkbox" id="fanToggle"><span class="slider"></span></label></div>
+            <div class="control-box"><span>PORT</span><label class="switch"><input type="checkbox" id="portToggle"><span class="slider"></span></label></div>
+        </div>
         
-<script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-analytics.js";
-    import { getDatabase, ref, onValue, set } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
+        <h2 style="color: #226924;">Analytics</h2>
+        <div class="section">
+            <div class="chart-box"><h3>E-BILL (LAST 7 DAYS)</h3><canvas id="billBarChart"></canvas></div>
+            <div class="chart-box"><h3>LIVE POWER (WATTS)</h3><canvas id="powerLineChart"></canvas></div>
+        </div>
 
-    const firebaseConfig = {
-        apiKey: "AIzaSyDK2t0oMloB7t3zFt84voANXxgvnS8YadM",
-        authDomain: "test-001-c3444.firebaseapp.com",
-        databaseURL: "https://test-001-c3444-default-rtdb.asia-southeast1.firebasedatabase.app",
-        projectId: "test-001-c3444",
-        storageBucket: "test-001-c3444.appspot.com",
-        messagingSenderId: "885640728034",
-        appId: "1:885640728034:web:52d3e85484db18d90a3dbb",
-        measurementId: "G-5LM1YQ7LF0"
-    };
+        <h2>Notifications & Alerts</h2>
+        <div class="section">
+            <div class="info-box" style="background-color: #fffbe6; border-color: #ffe58f; width: 100%;">
+                <h3 id="motionAlert">No motion detected recently.</h3>
+            </div>
+        </div>
 
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
-    const db = getDatabase(app);
+        <h2>AI Integration</h2>
+        <div class="section">
+            <div class="ai-box">
+                <h3>SMART AI INSIGHT</h3>
+                <p id="aiInsight">Fetching AI insight...</p>
+            </div>
+            <div class="ai-box">
+                <h3>CHAT WITH AI</h3>
+                <input type="text" id="userQuestion" placeholder="Ask something..." style="width: 70%; padding: 10px; border-radius: 20px; border: 1px solid #ccc;">
+                <button id="askBtn" style="padding: 10px 15px; border-radius: 20px; border: none; background-color: #5865f2; color: white; cursor: pointer;">Ask</button>
+                <p id="userAIResponse" style="margin-top: 10px;"></p>
+            </div>
+        </div>
+    </div>
 
-    const API_SERVER_URL = "http://localhost:3001";
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+        import { getDatabase, ref, onValue, set } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
 
-    // ===============================================
-    // REAL-TIME METRICS & CONTROL
-    // ===============================================
+        // --- CONFIGURATION ---
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY", // Replace with your key
+            authDomain: "test-001-c3444.firebaseapp.com",
+            databaseURL: "https://test-001-c3444-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "test-001-c3444",
+            storageBucket: "test-001-c3444.appspot.com",
+            messagingSenderId: "885640728034",
+            appId: "1:885640728034:web:52d3e85484db18d90a3dbb"
+        };
+        const API_SERVER_URL = "http://localhost:3001";
+        const REFRESH_INTERVAL = 30000; // 30 seconds
 
-    const powerRef = ref(db, "POWER");
-    onValue(powerRef, async (snapshot) => {
-        const power = snapshot.val();
-        document.getElementById("Power").innerText = power + " mw";
-    });
+        // --- INITIALIZE FIREBASE ---
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
 
-    const currentRef = ref(db, "CURRENT_DATA");
-    onValue(currentRef, async (snapshot) => {
-        const current = snapshot.val();
-        document.getElementById("Current").innerText = current + "A";
-        await fetchInsight(current);
-    });
+        // --- CHART SETUP (Initialized here, data loaded later) ---
+        const createChart = (ctx, type, data, options) => new Chart(ctx, { type, data, options });
+        const chartOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: { y: { beginAtZero: true } }
+        };
 
-    const costRef = ref(db, "POWER");
-    onValue(costRef, async (snapshot) => {
-        const cost = snapshot.val();
-        document.getElementById("costttoday").innerText = cost;
-    });
+        const costSourceChart = createChart(document.getElementById('costSourceChart').getContext('2d'), 'pie', {
+            labels: ['Grid', 'Solar'], datasets: [{ data: [70, 30], backgroundColor: ['#5865f2', '#f0b90b'] }]
+        }, { responsive: true, maintainAspectRatio: false });
 
-    const ledRef = ref(db, "LED_STATUS");
-    onValue(ledRef, (snapshot) => {
-        const state = snapshot.val();
-        document.getElementById("ledToggle").checked = (state === 3);
-    });
-    document.getElementById("ledToggle").addEventListener("change", function() {
-        const newState = this.checked ? 3 : 0;
-        set(ledRef, newState);
-    });
+        const billBarChart = createChart(document.getElementById('billBarChart').getContext('2d'), 'bar', {
+            labels: [], datasets: [{ label: 'E-BILL (₹)', data: [], backgroundColor: '#5865f2' }]
+        }, chartOptions);
 
-    const fanRef = ref(db, "FAN_STATUS");
-    onValue(fanRef, (snapshot) => {
-        const state = snapshot.val();
-        document.getElementById("fanToggle").checked = (state === 3);
-    });
-    document.getElementById("fanToggle").addEventListener("change", function() {
-        const newState = this.checked ? 3 : 0;
-        set(fanRef, newState);
-    });
+        const powerLineChart = createChart(document.getElementById('powerLineChart').getContext('2d'), 'line', {
+            labels: [], datasets: [{ label: 'Power (W)', data: [], borderColor: '#f25858', tension: 0.3 }]
+        }, chartOptions);
 
-    const portRef = ref(db, "PORT_STATUS");
-    onValue(portRef, (snapshot) => {
-        const state = snapshot.val();
-        document.getElementById("portToggle").checked = (state === 3);
-    });
-    document.getElementById("portToggle").addEventListener("change", function() {
-        const newState = this.checked ? 3 : 0;
-        set(portRef, newState);
-    });
+        // --- REAL-TIME FIREBASE LISTENERS ---
+        onValue(ref(db, "POWER"), snapshot => {
+            const power = snapshot.val() || 0;
+            document.getElementById("Power").innerText = `${power.toFixed(2)} W`;
+            const current = parseFloat(document.getElementById("Current").innerText) || 0;
+            const voltage = current > 0 ? (power / current) : 0;
+            document.getElementById("Voltage").innerText = `${voltage.toFixed(2)} V`;
+        });
 
-    // ===============================================
-    // AI INTEGRATION
-    // ===============================================
-
-    async function fetchInsight(current) {
-        try {
-            const response = await fetch(${API_SERVER_URL}/api/ai-insight, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ prompt: Current usage is ${current} amperes. Provide a brief insight or suggestion for smart energy management. }),
-            });
-            if (!response.ok) {
-                throw new Error(HTTP error! Status: ${response.status});
-            }
-            const data = await response.json();
-            document.getElementById("aiInsight").innerText = data.insight;
-        } catch (error) {
-            console.error('Error fetching AI insight:', error);
-            document.getElementById("aiInsight").innerText = 'Error fetching insight.';
-        }
-    }
-
-    document.getElementById("askBtn").addEventListener("click", async() => {
-        const userQuestion = document.getElementById("userQuestion").value;
-        if (!userQuestion) {
-            document.getElementById("userAIResponse").innerText = "Please enter a question.";
-            return;
-        }
-        document.getElementById("userAIResponse").innerText = "Loading...";
-        try {
-            const response = await fetch(${API_SERVER_URL}/api/ai-insight, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ prompt: userQuestion }),
-            });
-            if (!response.ok) {
-                throw new Error(HTTP error! Status: ${response.status});
-            }
-            const data = await response.json();
-            document.getElementById("userAIResponse").innerText = data.insight;
-        } catch (error) {
-            console.error('Error fetching AI answer:', error);
-            document.getElementById("userAIResponse").innerText = 'Error fetching answer.';
-        }
-    });
-
-    // ===============================================
-    // POWER ANALYTICS
-    // ===============================================
-
-    async function fetchAndDisplayTotalEnergy() {
-        try {
-            const response = await fetch(${API_SERVER_URL}/api/total-energy);
-            if (!response.ok) {
-                throw new Error(HTTP error! Status: ${response.status});
-            }
-            const data = await response.json();
-            const totalEnergyText = ${data.totalEnergy.toFixed(2)} mWh;
-            document.getElementById('totalEnergySum').innerText = totalEnergyText;
-        } catch (error) {
-            console.error('Error fetching and displaying total energy data:', error);
-            document.getElementById('totalEnergySum').innerText = 'Error';
-        }
-    }
-
-    // ===============================================
-    // POWER ANALYTICS BY DATE
-    // ===============================================
-    async function fetchPowerDataByDate(date) {
-        try {
-            const response = await fetch(${API_SERVER_URL}/api/total-energy-by-day?date=${date});
-            if (!response.ok) {
-                throw new Error(HTTP error! Status: ${response.status});
-            }
-            const data = await response.json();
-            const displayDate = new Date(data.date).toLocaleDateString();
-            document.getElementById('selectedDaySpan').innerText = displayDate;
-            document.getElementById('totalEnergySumByDay').innerText = ${data.totalEnergy.toFixed(2)} mWh;
-        } catch (error) {
-            console.error('Error fetching and displaying power data by date:', error);
-            document.getElementById('totalEnergySumByDay').innerText = 'Error loading data.';
-        }
-    }
-
-    document.getElementById('searchDayBtn').addEventListener('click', () => {
-        const dateInputDay = document.getElementById('dateInputDay').value;
-        if (dateInputDay) {
-            fetchPowerDataByDate(dateInputDay);
-        }
-    });
-
-    // ===============================================
-    // WEEKLY ENERGY CHART
-    // ===============================================
-    async function fetchAndDisplayWeeklyEnergyChart() {
-        try {
-            const response = await fetch(${API_SERVER_URL}/api/weekly-energy);
-            if (!response.ok) {
-                throw new Error(HTTP error! Status: ${response.status});
-            }
-            const data = await response.json();
-            const lineChart = Chart.getChart('lineChart');
-            if (lineChart) {
-                lineChart.data.labels = data.dates;
-                lineChart.data.datasets[0].data = data.energies;
-                lineChart.update();
-            }
-        } catch (error) {
-            console.error('Error fetching and displaying weekly energy chart data:', error);
-        }
-    }
-
-
-     async function fetchAndDisplayCostAnalytics() {
-    try {
-        // Fetch Today's Cost
-        const todayResponse = await fetch(${API_SERVER_URL}/api/cost-today);
-        if (todayResponse.ok) {
-            const todayData = await todayResponse.json();
-            document.getElementById('costtoday').innerText = ₹${todayData.totalCost.toFixed(2)};
-        } else {
-            document.getElementById('costtoday').innerText = 'Error';
-        }
-
-        // Fetch Weekly Cost
-        const weeklyResponse = await fetch(${API_SERVER_URL}/api/cost-analytics?period=weekly);
-        if (weeklyResponse.ok) {
-            const weeklyData = await weeklyResponse.json();
-            document.getElementById('weeklyCostDisplay').innerText = ₹${weeklyData.totalCost.toFixed(2)};
-        } else {
-            document.getElementById('weeklyCostDisplay').innerText = 'Error';
-        }
-
-        // Fetch Monthly Cost
-        const monthlyResponse = await fetch(${API_SERVER_URL}/api/cost-analytics?period=monthly);
-        if (monthlyResponse.ok) {
-            const monthlyData = await monthlyResponse.json();
-            document.getElementById('monthlyCostDisplay').innerText = ₹${monthlyData.totalCost.toFixed(2)};
-        } else {
-            document.getElementById('monthlyCostDisplay').innerText = 'Error';
-        }
-
-    } catch (error) {
-        console.error('Error fetching cost analytics:', error);
-        document.getElementById('costtoday').innerText = 'Error';
-        document.getElementById('weeklyCostDisplay').innerText = 'Error';
-        document.getElementById('monthlyCostDisplay').innerText = 'Error';
-    }
-}
-
-// A global variable to store the last time motion was detected
-let lastMotionTime = null;
-
-// This function calculates and updates the time since last motion
-function updateMotionAlert() {
-    const alertElement = document.getElementById('motionAlert');
-    if (lastMotionTime) {
-        const now = new Date();
-        const timeDiff_ms = now.getTime() - lastMotionTime.getTime();
-        const timeDiff_s = Math.floor(timeDiff_ms / 1000);
+        onValue(ref(db, "CURRENT_DATA"), snapshot => {
+            const current = snapshot.val() || 0;
+            document.getElementById("Current").innerText = `${current.toFixed(2)} A`;
+            fetchInsight(current);
+        });
         
-        let message = '';
-        if (timeDiff_s < 60) {
-            message = Motion detected before ${timeDiff_s} seconds.;
-        } else {
-            const minutes = Math.floor(timeDiff_s / 60);
-            message = Motion detected before ${minutes} minute${minutes > 1 ? 's' : ''}.;
+        // Motion Sensor Listener
+        let lastMotionTime = null;
+        onValue(ref(db, "IR_DATA"), (snapshot) => {
+            if (snapshot.val() === "HIGH") {
+                lastMotionTime = new Date();
+                document.getElementById('motionAlert').innerText = 'Motion Detected!';
+            }
+        });
+        setInterval(() => {
+            if (lastMotionTime) {
+                const diff_s = Math.floor((new Date() - lastMotionTime) / 1000);
+                if (diff_s > 5) { // Show "last seen" after 5 seconds
+                    document.getElementById('motionAlert').innerText = `Motion last detected ${diff_s} seconds ago.`;
+                }
+            }
+        }, 1000);
+
+        // --- SMART CONTROLS ---
+        const setupToggle = (toggleId, dbPath) => {
+            const toggleElement = document.getElementById(toggleId);
+            const dbRef = ref(db, dbPath);
+            onValue(dbRef, (snapshot) => { toggleElement.checked = (snapshot.val() === 3); });
+            toggleElement.addEventListener("change", () => { set(dbRef, toggleElement.checked ? 3 : 0); });
+        };
+        setupToggle("ledToggle", "LED_STATUS");
+        setupToggle("fanToggle", "FAN_STATUS");
+        setupToggle("portToggle", "PORT_STATUS");
+
+        // --- DATA FETCHING FROM BACKEND API ---
+
+        async function fetchDashboardData() {
+            try {
+                // Costs
+                const costsRes = await fetch(`${API_SERVER_URL}/api/costs`);
+                const costsData = await costsRes.json();
+                document.getElementById("cost-today").innerText = `₹${costsData.cost_today}`;
+                document.getElementById("cost-month").innerText = `₹${costsData.cost_month}`;
+
+                // Total Energy
+                const energyRes = await fetch(`${API_SERVER_URL}/api/total-energy`);
+                const energyData = await energyRes.json();
+                document.getElementById('totalEnergySum').innerText = `${(energyData.totalEnergy / 1000).toFixed(2)} kWh`;
+
+                // Weekly Bill Chart
+                const billChartRes = await fetch(`${API_SERVER_URL}/api/charts/weekly-bill`);
+                const billChartData = await billChartRes.json();
+                billBarChart.data.labels = billChartData.labels;
+                billBarChart.data.datasets[0].data = billChartData.data;
+                billBarChart.update();
+
+                // Power History Chart
+                const powerChartRes = await fetch(`${API_SERVER_URL}/api/charts/power-history`);
+                const powerChartData = await powerChartRes.json();
+                powerLineChart.data.labels = powerChartData.labels;
+                powerLineChart.data.datasets[0].data = powerChartData.data;
+                powerLineChart.update();
+
+            } catch (error) {
+                console.error("Error fetching dashboard data:", error);
+            }
         }
-        alertElement.innerText = message;
-    }
-}
 
-// Set up a listener for motion data from Firebase
-const motionRef = ref(db, "IR_DATA");
-onValue(motionRef, (snapshot) => {
-    const motionStatus = snapshot.val();
-    if (motionStatus === "HIGH") {
-        lastMotionTime = new Date(); // Update the time when motion is HIGH
-    } else if (motionStatus === "LOW") {
-        // You can handle a "LOW" status here if needed
-        // For example, you can choose to clear the message or reset the timer
-    }
-});
-
-// Run the update function every second
-setInterval(updateMotionAlert, 1000); // 1000 milliseconds = 1 second
-    
-
-    // This block runs when the page loads to initialize all the data
-    document.addEventListener('DOMContentLoaded', () => {
-        fetchAndDisplayTotalEnergy();
-        fetchAndDisplayWeeklyEnergyChart();
-        fetchAndDisplayCostAnalytics();
-        const today = new Date().toISOString().split('T')[0];
-        const dateInputDay = document.getElementById('dateInputDay');
-        if (dateInputDay) {
-            dateInputDay.value = today;
-            fetchPowerDataByDate(today);
+        // --- AI INTEGRATION ---
+        async function fetchInsight(current) {
+            try {
+                const prompt = `Current campus energy usage is ${current.toFixed(2)} amperes. Provide a brief, actionable insight for smart energy management.`;
+                const response = await fetch(`${API_SERVER_URL}/api/ai-insight`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ prompt }),
+                });
+                const data = await response.json();
+                document.getElementById("aiInsight").innerText = data.insight;
+            } catch (error) {
+                console.error("Error fetching AI insight:", error);
+            }
         }
-    });
 
-
-    // NEW: Function to fetch and display the calculated costs for today, weekly, and monthly
-   
-
-</script>
-
-                </body>
-            
-    </html>
+        document.getElementById("askBtn").addEventListener("click", async () => {
+            const userQuestion = document.getElementById("userQuestion").value;
+            const responseEl = document.getElementById("userAIResponse");
+            if (!userQuestion) return;
+            responseEl.innerText = "Thinking...";
+            try {
+                const response = await fetch(`${API_SERVER_URL}/api/ai-insight`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ prompt: userQuestion }),
+                });
+                const data = await response.json();
+                responseEl.innerText = data.insight;
+            } catch (error) {
+                responseEl.innerText = "Failed to get an answer.";
+            }
+        });
+        
+        // --- INITIAL LOAD AND REFRESH ---
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchDashboardData(); // Fetch all data on load
+            setInterval(fetchDashboardData, REFRESH_INTERVAL); // Refresh every 30 seconds
+        });
+    </script>
+</body>
+</html>
