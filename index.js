@@ -18,7 +18,7 @@ const firebaseDatabaseURL = "https://test-001-c3444-default-rtdb.asia-southeast1
 const mysqlConfig = {
     host: 'localhost', // Note: This will be a problem, see below
     user: 'root',
-    password: process.env.DB_PASSWORD, // This is the new, correct way
+    password: 'password', // This is the new, correct way
     database: 'energy_metrics'
 };
 const geminiAPIKey = process.env.GEMINI_API_KEY;
